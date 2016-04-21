@@ -1,0 +1,9 @@
+<Image source={{require:'./img/icon.png'}}
+ resizeMode="contain"
+ style={{backgroundColor:'#fff'}}/>
+
+
+
+ <Image source={{uri: 'https://raw.githubusercontent.com/clwater/ExternalFile/master/img/icon.png'}}
+  resizeMode="cover"
+  style={{height:200,width:200}}
