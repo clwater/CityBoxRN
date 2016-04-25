@@ -28,7 +28,7 @@ var LoginView = React.createClass({
       AsyncStorage.getItem('loginstatu')
            .then((value) => {
                this.setState({loginstatu: value});
-               if(this.state.loginstatu == 'tru'){
+               if(this.state.loginstatu == 'true'){
                  if(loginpd === false){
                 this.props.navigator.push({name: 'main'});
                 loginpd = true;
@@ -66,10 +66,12 @@ var MainView = React.createClass({
    AsyncStorage.getItem('loginstatu')
         .then((value) => {
             this.setState({loginstatu: value});
-            if(this.state.loginstatu == 'tru'){
+            if(this.state.loginstatu == 'true'){
              //登陆成功
+             //alert(this.state.loginstatu);
             }else {
              //alert('no');
+             //alert(this.state.loginstatu);
              this.props.navigator.push({name: 'login'});
             }
           }).catch().done();

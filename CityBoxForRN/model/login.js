@@ -115,13 +115,13 @@ var Login = React.createClass({
   //this.savelogininfo('201312026');
 
 
-  console.log(this.state.password);
+  //console.log(this.state.password);
   fetch('http://cityuit.sinaapp.com/login.php', {
    method: 'POST',
    // headers: {
    //     'Content-Type' : 'application/json;charset=UTF-8'
    //   },
-   body:this.toQueryString({
+    body:this.toQueryString({
     username :this.state.username,
     password :this.state.password,
    }),
@@ -131,7 +131,7 @@ var Login = React.createClass({
   })
   .then((responseText) => {
     //alert(responseText);
-    console.log(responseText);
+    //console.log(responseText);
     this.analysiclogin(responseText);
   })
   .catch((error) => {
@@ -140,8 +140,9 @@ var Login = React.createClass({
  },
 
  savelogininfo:function(name){
-  console.log('=-=');
-  AsyncStorage.setItem('loginstatu', 'tru').done();
+  //console.log('=-=');
+  console.log(this.state.username);
+  AsyncStorage.setItem('loginstatu', 'true').done();
   AsyncStorage.setItem('loginname', name).done();
   AsyncStorage.setItem('loginid', this.state.username).done();
   AsyncStorage.setItem('loginpassword', this.state.password).done();
@@ -152,9 +153,11 @@ var Login = React.createClass({
    var status = obj.status;
    var name = obj.man;
    var im = obj.im;
-   console.log(status);
-   console.log(name);
-   console.log(im);
+   //console.log('01');
+   //console.log(status);
+   //console.log('02');
+   //console.log(name);
+   //console.log(im);
 
 
 
@@ -163,7 +166,9 @@ var Login = React.createClass({
             '登录成功',
             null
           ),
+          //alert('1');
      this.savelogininfo(name);
+      // alert('2');
    }else if(status == 'login failed'){
     Alert.alert(null,
            '帐号或密码错误',

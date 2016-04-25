@@ -14,15 +14,15 @@ var {
  Alert,
  SQL,
  Database,
+ AsyncStorage,
 } = React;
-
 
 //var width = PixeRatio.get
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
 var local_nv;
 var schedle = new Array();
-
+var id ='';
 var Schedule = React.createClass({
  componentDidMount: function () {
    //alert('asd');
@@ -41,6 +41,8 @@ var Schedule = React.createClass({
    return {
     today_week : '1' ,
     schedule_week : '1',
+    id:'',
+    password:'',
    };
   },
 
@@ -56,6 +58,64 @@ var Schedule = React.createClass({
 
   },
 
+
+  toQueryString:function (obj) {
+      return obj ? Object.keys(obj).sort().map(function (key) {
+          var val = obj[key];
+          if (Array.isArray(val)) {
+              return val.sort().map(function (val2) {
+                  return encodeURIComponent(key) + '=' + encodeURIComponent(val2);
+              }).join('&');
+          }
+
+          return encodeURIComponent(key) + '=' + encodeURIComponent(val);
+      }).join('&') : '';
+  },
+
+
+  getScheduleMeaasge:function(){
+   alert('正在更新');
+   //console.log("aaa");
+   //获取本地存储的账号和密码
+
+   AsyncStorage.getItem('loginid')
+        .then((value) => {
+         alert(value);
+         this.state.password = value;
+          }).catch().done();
+   AsyncStorage.getItem('loginpassword')
+        .then((value) => {
+         alert(value);
+            this.state.password = value;
+          }).catch().done();
+
+
+
+   fetch('http://120.27.53.146:5000/api/schedule', {
+    method: 'POST',
+    // headers: {
+    //     'Content-Type' : 'application/json;charset=UTF-8'
+    //   },
+     body:this.toQueryString({
+     username :'201312026',
+     password :'221628',
+     action : 'update',
+    }),
+   })
+   .then(function(data){
+     return data.text();
+   })
+   .then((responseText) => {
+     //alert(responseText);
+     console.log(responseText);
+
+   })
+   .catch((error) => {
+     console.warn(error);
+   });
+
+  },
+
  render:function(){
   return(
    <View style={styles.container}>
@@ -67,8 +127,8 @@ var Schedule = React.createClass({
      </View>
      <View style={{flex:4}}/>
      <TouchableOpacity>
-     <View style={[{flex:1 }, styles.update]}>
-      <Text style={{color:'#fff'}}>更新</Text>
+     <View style={[{flex:1 }, styles.update]} >
+      <Text style={{color:'#fff'}} onPress={this.getScheduleMeaasge}>更新</Text>
      </View>
      </TouchableOpacity>
     </View>
